@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<header>
+  <link rel="stylesheet" type="text/css" href="{% static 'movie/index.css' %}">
+</header>
+
+<body>
+  <h1>ムービーメーカー</h1>
+
+  <h2>タグ選択</h2>
+
+  <button class="btn-sticky button1" type="button" onClick="location.href='{% url 'movie:wait_key' 'SchoolLife'  %}';" value="大学生活">
+    大学生活
+  </button>
+
+  <button class="btn-sticky button1" type="button" onClick="location.href='{% url 'movie:wait_key' 'Lab' %}';" value="研究室">
+    研究室
+  </button>
+
+  <button class="btn-sticky button2" type="button" onClick="location.href='{% url 'movie:wait_key' 'Shop' %}';" value="学食">
+    大学周辺
+  </button>
+
+  <a href=imageCreate>新しい画像</a>
+
+</body>

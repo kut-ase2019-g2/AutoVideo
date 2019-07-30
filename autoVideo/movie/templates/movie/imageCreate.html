@@ -1,0 +1,11 @@
+<form method="post" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+    <input type="submit">
+</form>
+
+<button type="button" onClick="location.href='{% url 'movie:index' %}';" >
+  ホームに戻る
+</button>

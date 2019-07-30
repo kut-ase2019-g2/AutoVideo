@@ -1,0 +1,12 @@
+{% load static %}
+<!DOCTYPE html>
+
+<header>
+  <meta http-equiv="refresh" content=" 0.1; url={% url 'movie:movieMake_key' key%}">
+</header>
+
+<body>
+<h1>ムービーメーカー</h1>
+<h2>Wait</h2>
+{{ key }}
+</body>

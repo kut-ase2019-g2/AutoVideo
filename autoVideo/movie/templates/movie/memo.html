@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<header>
+  <link rel="stylesheet" type="text/css" href="{% static 'movie/index.css' %}">
+</header>
+
+<body>
+  <h1>ムービーメーカー</h1>
+
+  <a href="{% url 'movie:wait' %}">test</a>
+
+  <h2>タグ選択</h2>
+  <form method="get">
+    <button class="button " type="button" onClick="location.href='{% url 'movie:wait' %}';" value="学食">
+      学食
+    </button>
+  </form>
+  <form method="get">
+    <button class="button " name="buttonB" onClick="location.href='{% url 'movie:wait' %}';" value="大学">
+      大学
+    </button>
+  </form>
+</body>

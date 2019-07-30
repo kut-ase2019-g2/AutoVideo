@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+
+<header>
+
+</header>
+
+<body>
+<h1>アップロードされました</h1>
+<h2>付与されたエフェクトタグ: {{ effect_tag }}</h2>
+<h3>アップロード画像</h3>
+<img src="{{ image.url }}" />
+<h3>テキストタグ: {{ text_tag }}</h3>
+</body>
+
+<button type="button" onClick="location.href='{% url 'movie:imageCreate' %}';" >
+  アップロードを続ける
+</button>
+
+<button type="button" onClick="location.href='{% url 'movie:index' %}';" >
+  ホームに戻る
+</button>
