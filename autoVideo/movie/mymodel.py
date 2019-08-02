@@ -16,7 +16,7 @@ def main(api_key, image_list, outpath):
     image_list_random = random.sample(image_list, 10)
 
     # fileの書き出し setup
-    f_AI = open(outpath+'/tag_data_.csv', 'w')
+    f_AI = open(outpath+'/tag_data.csv', 'w')
     w_AI = csv.writer(f_AI, lineterminator='\n')
 
     # API setup

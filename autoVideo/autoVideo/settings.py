@@ -17,8 +17,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 CSV_URL = os.path.join(MEDIA_ROOT, 'csv')
+PLAY_VIDOE = os.path.join(MEDIA_ROOT, 'result.mp4')
+VIDOE_MUSIC = os.path.join(MEDIA_ROOT, 'music/music.mp3')
+ENCODE_VIDEO = os.path.join(MEDIA_ROOT, 'movie/test_bgm_ai.mp4')
+RESULT_VIDEO = os.path.join(MEDIA_ROOT, 'movie/result2.mp4')
+JSX_PASS = '"C:/Program Files/Adobe/Adobe After Effects CC 2019/Support Files/AfterFX.exe" -r C:/Users/hayak/work/git/AutoVideo/autoVideo/ExtendScript.jsx'
+FFMPEG_COMMAND = 'ffmpeg -i '+ ENCODE_VIDEO +' -i '+ VIDOE_MUSIC +' -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 ' + RESULT_VIDEO
 
 CLARIFAI_API_KEY = 'bd906f9daf294ddf91bd87c16e7aabb4'
 

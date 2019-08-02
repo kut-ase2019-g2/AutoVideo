@@ -9,6 +9,9 @@ import os
 from .forms import ImagesForm
 from django.urls import reverse
 import csv
+import subprocess
+import time
+import shutil
 
 # Create your views here.
 
@@ -20,20 +23,8 @@ class IndexView(generic.TemplateView):
         context["title"] = "MyPage"
         return context
 
-
-# def Wait(self, request, *args, **kwargs):
-
-
-
 class WaitView(generic.TemplateView):
     template_name = 'movie/wait.html'
-
-    # def get(key=''):
-    #     useimage_record = Image.objects.filter(text_tag=self.kwargs.get('key')).order_by('created_at').reverse()[:10] #上位10件
-    # #     for record in useimage_record:
-    # #         print(record.Image)
-    #     # Image.objects.order_by('created_at').reverse()
-    #     return
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
@@ -44,8 +35,6 @@ class WaitView(generic.TemplateView):
         context = super().get_context_data(**kwargs)
         context["key"] = self.kwargs.get('key')
         useimage_record = Image.objects.filter(text_tag=self.kwargs.get('key')).order_by('created_at')[:10] #上位10件
-        # for record in useimage_record:
-        #     print(record.image)
         return context
 
 
@@ -58,38 +47,29 @@ def movieMake(request, key):
         w_AI = csv.writer(f_AI, lineterminator='\n')
         for i in range(10):
             w_AI.writerow([image_list[i]] + [effect_list[i]])
-        # print(str(image_list[i]) +': ' + str(effect_list[i]))
 
 
+    if os.path.exists(os.path.join(settings.MEDIA_ROOT, 'movie/test_bgm_ai.mp4')):
+        os.remove(os.path.join(settings.MEDIA_ROOT, 'movie/test_bgm_ai.mp4'))
+    if os.path.exists(os.path.join(settings.MEDIA_ROOT, 'movie/result2.mp4')):
+        os.remove(os.path.join(settings.MEDIA_ROOT, 'movie/result2.mp4'))
 
-
-
-    #タグ生成
-    # mymodel.main(api_key=settings.CLARIFAI_API_KEY, image_list=image_list, outpath=settings.CSV_URL)
-    # 動画生成
-
-    return redirect('movie:index')
+    os.system(settings.JSX_PASS)
+    print('===== Encoder =====')
+    time.sleep(40)
+    os.system(settings.FFMPEG_COMMAND)
+    time.sleep(2)
+    return redirect('movie:play_key',key)
 
 
 class PlayView(generic.TemplateView):
     template_name = 'movie/play.html'
 
-# class ImageCreateView(generic.View):
-#     template_name = 'movie/imageCreate.html'
-#     form_class = ImagesForm
-#
-#
-#     def get(self, request, *args, **kwargs):
-#         form = self.form_class()
-#         return render(request, self.template_name, {'form': form})
-#
-#
-#     def post(self, request, *args, **kwargs):
-#         form = self.form_class(request.POST)
-#         print(self)
-#         if form.is_valid():
-#             return redirect('movie:newImage', kwargs={'image': form.image})
-#         return render(request, self.template_name, {'form': form})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["key"] = self.kwargs.get('key')
+        context["video"] = settings.PLAY_VIDOE
+        return context
 
 
 class ImageCreateView(generic.CreateView):
@@ -100,10 +80,7 @@ class ImageCreateView(generic.CreateView):
     # fields = "__all__"
 
     def get_success_url(self):
-        # print(reverse('movie:newImage', kwargs={'image': self.object.image}))
-        # return reverse('movie:newImage', kwargs={'image': self.object.image})
         return reverse('movie:newImage', kwargs={'pk':self.object.pk})
-    # success_url = reverse_lazy('base:top')
 
 
 class NewImageView(generic.TemplateView):
@@ -122,11 +99,4 @@ class NewImageView(generic.TemplateView):
         record.effect_tag = effect_tag
         record.save() # レコード更新
         context["effect_tag"] = effect_tag
-
         return context
-
-# class WaitKeyView(generic.TemplateView):
-#     template_name = 'movie/wait.html'
-
-    # def main(self):
-    #     return HttpResponse("Hello, world.")
